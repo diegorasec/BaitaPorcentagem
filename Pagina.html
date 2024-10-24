@@ -36,7 +36,7 @@
             color: #bbb;
         }
 		input[type="text"] {
-			width:60px;
+			width:38px;
 		}		
         input[type="number"], input[type="text"], button {
             padding: 10px;
@@ -177,7 +177,7 @@
                 let percInput = document.getElementById(`perc${i}`);
                 let perc = parseFloat(percInput.value.replace('%', ''));
                 if (!isNaN(perc)) {
-                    document.getElementById(`res${i}`).innerHTML = (rm * perc / 100).toFixed(2) + " kgs";
+                    document.getElementById(`res${i}`).innerHTML = (rm * perc / 100).toFixed(1) + " kgs";
                 }
             }
         }
