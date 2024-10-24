@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Porcentagens</title>
+    <style>
+        /* Estilo base */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #bbb;
+        }
+        input[type="number"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1em;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background-color: #2b2b2b;
+            color: #fff;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #6200ea;
+        }
+        button {
+            background-color: #6200ea;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #3700b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .res-value {
+            font-weight: bold;
+            color: #fff;
+            width: 100px;
+            display: inline-block;
+        }
+
+        /* Botão de zerar discreto */
+        .zerar-btn {
+            width: auto;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            background-color: #444;
+            border: 1px solid #555;
+            color: #fff;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .zerar-btn:hover {
+            background-color: #555;
+        }
+
+        /* Estilos para telas menores */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+            .container {
+                padding: 20px;
+            }
+            table {
+                font-size: 0.9em;
+            }
+            input[type="number"], button {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Baita Porcentagem</h1>
+
+        <label for="RM">RM (Peso Máximo):</label>
+        <input type="number" id="RM" onkeyup="calcularPorcentagens()" />
+
+        <!-- Botão de Zerar Discreto -->
+        <button class="zerar-btn" onclick="zerarCampos()">Zerar</button>
+
+        <div class="result" id="result">
+            <table>
+                <tr>
+                    <td><input type="number" id="perc1" onkeyup="calcularPorcentagens()" value="40" /></td>
+                    <td><span class="res-value" id="res1"></span></td>
+                    <td><input type="number" id="perc6" onkeyup="calcularPorcentagens()" value="75" /></td>
+                    <td><span class="res-value" id="res6"></span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="perc2" onkeyup="calcularPorcentagens()" value="50" /></td>
+                    <td><span class="res-value" id="res2"></span></td>
+                    <td><input type="number" id="perc7" onkeyup="calcularPorcentagens()" value="80" /></td>
+                    <td><span class="res-value" id="res7"></span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="perc3" onkeyup="calcularPorcentagens()" value="60" /></td>
+                    <td><span class="res-value" id="res3"></span></td>
+                    <td><input type="number" id="perc8" onkeyup="calcularPorcentagens()" /></td>
+                    <td><span class="res-value" id="res8"></span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="perc4" onkeyup="calcularPorcentagens()" value="65" /></td>
+                    <td><span class="res-value" id="res4"></span></td>
+                    <td><input type="number" id="perc9" onkeyup="calcularPorcentagens()" /></td>
+                    <td><span class="res-value" id="res9"></span></td>
+                </tr>
+                <tr>
+                    <td><input type="number" id="perc5" onkeyup="calcularPorcentagens()" value="70" /></td>
+                    <td><span class="res-value" id="res5"></span></td>
+                    <td><input type="number" id="perc10" onkeyup="calcularPorcentagens()" /></td>
+                    <td><span class="res-value" id="res10"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function calcularPorcentagens() {
+            var rm = parseFloat(document.getElementById("RM").value);
+
+            for (let i = 1; i <= 10; i++) {
+                let perc = parseFloat(document.getElementById(`perc${i}`).value);
+                if (!isNaN(perc)) {
+                    document.getElementById(`res${i}`).innerHTML = (rm * perc / 100).toFixed(2) + " kgs";
+                }
+            }
+        }
+
+        function zerarCampos() {
+            // Limpar o valor do RM
+            document.getElementById("RM").value = "";
+            
+            // Definir os valores iniciais dos inputs de porcentagem
+            document.getElementById("perc1").value = 40;
+            document.getElementById("perc2").value = 50;
+            document.getElementById("perc3").value = 60;
+            document.getElementById("perc4").value = 65;
+            document.getElementById("perc5").value = 70;
+            document.getElementById("perc6").value = 75;
+            document.getElementById("perc7").value = 80;
+            document.getElementById("perc8").value = "";
+            document.getElementById("perc9").value = "";
+            document.getElementById("perc10").value = "";
+
+            // Limpar os resultados
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById(`res${i}`).innerHTML = "";
+            }
+        }
+    </script>
+</body>
+</html>
