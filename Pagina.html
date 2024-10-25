@@ -36,8 +36,8 @@
             color: #bbb;
         }
 		input[type="text"] {
-			width:38px;
-		}		
+			width: 38px;
+		}
         input[type="number"], input[type="text"], button {
             padding: 10px;
             margin: 10px 0;
@@ -96,6 +96,23 @@
             background-color: #555;
         }
 
+        /* Estilos para os radio buttons */
+        .radio-group {
+            text-align: center;
+            display: inline-block;
+            color: #bbb;
+        }
+        
+        .radio-group input[type="radio"] {
+            accent-color: #EAC132;
+            margin-right: 5px;
+            vertical-align: right;
+        }
+        .radio-group label {
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
         /* Estilos para telas menores */
         @media (max-width: 600px) {
             body {
@@ -123,37 +140,73 @@
         <!-- Botão de Zerar Discreto -->
         <button class="zerar-btn" onclick="zerarCampos()">Zerar</button>
 
+        <!-- Grupo de botões de opção (radio buttons) -->
+        <div class="radio-group" style="text-align: center; display: inline-block;">
+            <label><input type="radio"onclick="calcularPorcentagens()" name="barType" value="20" checked />M</label>
+            <label><input type="radio"onclick="calcularPorcentagens()" name="barType" value="15" />F</label>
+        </div>
+
         <div class="result" id="result">
             <table>
                 <tr>
                     <td><input type="text" id="perc1" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="40%" /></td>
-                    <td><span class="res-value" id="res1"></span></td>
+                    <td>
+                        <span class="res-value" id="res1"></span>
+                        <span class="res-value" id="resBarType1"></span>
+                    </td>
                     <td><input type="text" id="perc6" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="67%" /></td>
-                    <td><span class="res-value" id="res6"></span></td>
+                    <td>
+                        <span class="res-value" id="res6"></span>
+                        <span class="res-value" id="resBarType6"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="text" id="perc2" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="50%" /></td>
-                    <td><span class="res-value" id="res2"></span></td>
+                    <td>
+                        <span class="res-value" id="res2"></span>
+                        <span class="res-value" id="resBarType2"></span>
+                    </td>
                     <td><input type="text" id="perc7" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="70%" /></td>
-                    <td><span class="res-value" id="res7"></span></td>
+                    <td>
+                        <span class="res-value" id="res7"></span>
+                        <span class="res-value" id="resBarType7"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="text" id="perc3" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="60%" /></td>
-                    <td><span class="res-value" id="res3"></span></td>
+                    <td>
+                        <span class="res-value" id="res3"></span>
+                        <span class="res-value" id="resBarType3"></span>
+                    </td>
                     <td><input type="text" id="perc8" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="73%"/></td>
-                    <td><span class="res-value" id="res8"></span></td>
+                    <td>
+                        <span class="res-value" id="res8"></span>
+                        <span class="res-value" id="resBarType8"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="text" id="perc4" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="63%" /></td>
-                    <td><span class="res-value" id="res4"></span></td>
+                    <td>
+                        <span class="res-value" id="res4"></span>
+                        <span class="res-value" id="resBarType4"></span>
+                    </td>
                     <td><input type="text" id="perc9" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="75%"/></td>
-                    <td><span class="res-value" id="res9"></span></td>
+                    <td>
+                        <span class="res-value" id="res9"></span>
+                        <span class="res-value" id="resBarType9"></span>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="text" id="perc5" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="65%" /></td>
-                    <td><span class="res-value" id="res5"></span></td>
+                    <td>
+                        <span class="res-value" id="res5"></span>
+                        <span class="res-value" id="resBarType5"></span>
+                    </td>
                     <td><input type="text" id="perc10" onblur="formatarPorcentagem(this)" onkeyup="calcularPorcentagens()" value="78%"/></td>
-                    <td><span class="res-value" id="res10"></span></td>
+                    <td>
+                        <span class="res-value" id="res10"></span>
+                        <span class="res-value" id="resBarType10"></span>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -162,12 +215,14 @@
     <script>
         function calcularPorcentagens() {
             var rm = parseFloat(document.getElementById("RM").value);
-
+            var barType = document.querySelector('input[name="barType"]:checked').value;
+            
             // Verifica se RM é um número válido
             if (isNaN(rm) || rm <= 0) {
                 // Se não for válido, limpa todos os resultados e sai da função
                 for (let i = 1; i <= 10; i++) {
                     document.getElementById(`res${i}`).innerHTML = "";
+                    document.getElementById(`resBarType${i}`).innerHTML = "";
                 }
                 return;
             }
@@ -177,7 +232,12 @@
                 let percInput = document.getElementById(`perc${i}`);
                 let perc = parseFloat(percInput.value.replace('%', ''));
                 if (!isNaN(perc)) {
-                    document.getElementById(`res${i}`).innerHTML = (rm * perc / 100).toFixed(1) + " kgs";
+                    var calc = (rm * perc / 100);
+                    document.getElementById(`res${i}`).innerHTML = calc.toFixed(1) + " kgs";
+                    var side = ((calc - barType)/2);
+                    if(side > 0){
+                        document.getElementById(`resBarType${i}`).innerHTML =  side.toFixed(1) + " lado";
+                    }
                 }
             }
         }
@@ -211,6 +271,7 @@
             // Limpar os resultados
             for (let i = 1; i <= 10; i++) {
                 document.getElementById(`res${i}`).innerHTML = "";
+                document.getElementById(`resBarType${i}`).innerHTML = "";
             }
         }
     </script>
