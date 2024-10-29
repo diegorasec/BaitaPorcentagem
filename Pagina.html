@@ -38,6 +38,9 @@
 		input[type="text"] {
 			width: 38px;
 		}
+		input[type="number"] {
+			width: 120px;
+		}		
         input[type="number"], input[type="text"], button {
             padding: 10px;
             margin: 10px 0;
@@ -112,6 +115,11 @@
             margin-right: 15px;
             font-weight: normal;
         }
+		
+	    input[name="kg"], input[name="lb"] {
+			width: 70px;
+			margin: 0 5px;
+		}
 
         /* Estilos para telas menores */
         @media (max-width: 600px) {
@@ -131,7 +139,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" style="display:block;">
         <h1>Baita Porcentagem</h1>
 
         <label for="RM">RM (Peso Máximo):</label>
@@ -145,6 +153,10 @@
             <label><input type="radio"onclick="calcularPorcentagens()" name="barType" value="20" checked />M</label>
             <label><input type="radio"onclick="calcularPorcentagens()" name="barType" value="15" />F</label>
         </div>
+        <div style="text-align: center; display: inline-block;">
+            <label><input type="number" onkeyup="convertKGtoLB()" name="kg" id="kg" />Kg</label>
+            <label><input type="number" onkeyup="convertLBtoKG()" name="lb" id="lb" />Lb</label>
+        </div>		
 
         <div class="result" id="result">
             <table>
@@ -267,6 +279,8 @@
             document.getElementById("perc8").value = "79%";
             document.getElementById("perc9").value = "82%";
             document.getElementById("perc10").value = "85%";
+			document.getElementById("lb").value = "";
+			document.getElementById("kg").value = "";
 
             // Limpar os resultados
             for (let i = 1; i <= 10; i++) {
@@ -274,6 +288,25 @@
                 document.getElementById(`resBarType${i}`).innerHTML = "";
             }
         }
+		function convertKGtoLB() {
+			var kg = parseFloat(document.getElementById("kg").value);
+			if (!isNaN(kg)) {
+				var lb = kg * 2.20462;
+				document.getElementById("lb").value = lb.toFixed(1);
+			} else {
+				document.getElementById("lb").value = "";
+			}
+		}
+
+		function convertLBtoKG() {
+			var lb = parseFloat(document.getElementById("lb").value);
+			if (!isNaN(lb)) {
+				var kg = lb / 2.20462;
+				document.getElementById("kg").value = kg.toFixed(1);
+			} else {
+				document.getElementById("kg").value = "";
+			}			
+		}
     </script>
 </body>
 </html>
