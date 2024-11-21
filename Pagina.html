@@ -1,34 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        #box {
-            width: 100px;
-            height: 100px;
-            background-color: green;
-            position: absolute;
-            top: 50px;
-            left: 50px;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
-    <div id="box"></div>
-    <button onclick="moveRight()">Mover para Direita</button>
+    <div id="box" style="width:100px; height:100px; background:red;"></div>
+    <button onclick="animate()">Animar</button>
 
     <script>
-        function moveRight() {
-            const box = document.getElementById('box');
-            let position = 50;
-
-            function frame() {
-                if (position >= 300) return; // Parar no limite
-                position++;
-                box.style.left = position + 'px';
-                requestAnimationFrame(frame);
-            }
-
-            frame();
+        function animate() {
+            gsap.to("#box", { duration: 2, x: 300, rotation: 360 });
         }
     </script>
 </body>
