@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body {
+            height: 2000px;
+        }
+        #box {
+            width: 100px;
+            height: 100px;
+            background-color: purple;
+            position: fixed;
+            top: 100px;
+            left: 50px;
+        }
+    </style>
 </head>
 <body>
-    <div id="box" style="width:100px; height:100px; background:red;"></div>
-    <button onclick="animate()">Animar</button>
+    <div id="box"></div>
 
     <script>
-        function animate() {
-            gsap.to("#box", { duration: 2, x: 300, rotation: 360 });
-        }
+        window.addEventListener('scroll', () => {
+            const box = document.getElementById('box');
+            box.style.transform = `translateY(${window.scrollY}px)`;
+        });
     </script>
 </body>
 </html>
